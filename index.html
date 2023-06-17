@@ -4,26 +4,15 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
-        <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="style.css">
         <title>Web3 Manager</title>
     </head>
     <body>
         <button onclick="a1()">Alert 1</button>
         <button onclick="a2()">Alert 2</button>
         <button onclick="a3()">Alert 3</button>
+        <button onclick="qr('Any Text')">QR</button>
 
-        <script>
-            const WebApp = window.Telegram.WebApp;
-
-            async function a1() {
-                WebApp.showPopup();
-            };
-            async function a2() {
-                WebApp.showAlert("Qwerty");
-            };
-            async function a3() {
-                WebApp.showConfirm("Ytrewq!");
-            };
-        </script>
+        <script src="script.js"></script>
     </body>
 </html>
