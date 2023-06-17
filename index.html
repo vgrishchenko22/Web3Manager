@@ -8,5 +8,22 @@
         <title>Web3 Manager</title>
     </head>
     <body>
+        <button onclick="a1()">Alert 1</button>
+        <button onclick="a2()">Alert 2</button>
+        <button onclick="a3()">Alert 3</button>
+
+        <script>
+            const WebApp = window.Telegram.WebApp;
+
+            async function a1() {
+                WebApp.showPopup();
+            };
+            async function a2() {
+                WebApp.showAlert("Qwerty");
+            };
+            async function a3() {
+                WebApp.showConfirm("Ytrewq!");
+            };
+        </script>
     </body>
 </html>
