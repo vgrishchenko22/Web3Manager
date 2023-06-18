@@ -10,3 +10,18 @@ p {
 a {
     color: var(--tg-theme-link-color);
 }
+#connect-section {
+    display: block;
+}
+#search-section {
+    display: none;
+}
+#info-section {
+    display: none;
+}
+#edit-section {
+    display: none;
+}
+#settings-section {
+    display: none;
+}
