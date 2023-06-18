@@ -4,6 +4,9 @@ body {
 h1 {
     color: var(--tg-theme-text-color);
 }
-h4 {
+p {
     color: var(--tg-theme-hint-color);
+}
+a {
+    color: var(--tg-theme-link-color);
 }
