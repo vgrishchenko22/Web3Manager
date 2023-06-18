@@ -11,13 +11,22 @@
         <title>Web3 Manager</title>
     </head>
     <body>
-        <section id="connect-section">
+        <section id="connect-section"> <!-- Показ всех кошельков для подключения, нужно выбрать один из представленных кошельков и нажать на MainButton -->
+            <button onclick="begin()">Begin</button>
             <h1>Wallets</h1>
             <p>Select a wallet for connect</p>
+            <form action="#">
+                <input type="radio" name="wallet" id="TonKeeper" value="TonKeeper">
+                <label for="TonKeeper">TonKeeper</label><br>
+                <input type="radio" name="wallet" id="Tonhub" value="Tonhub">
+                <label for="Tonhub">Tonhub</label><br>
+                <input type="radio" name="wallet" id="OpenMask" value="OpenMask">
+                <label for="OpenMask">OpenMask</label>
+            </form>
         </section>
-        <section id="search-section">
+        <section id="search-section"> <!-- Главная страница поиска, пользователь должен написать название домена, выбрать доменную зону и нажать на MainButton -->
             <h1>Search Domain</h1>
-            <p>Write domain, which want buy!</p>
+            <p>Down find jmfd drhdklseg drh</p>
             <form action="#">
                 <input type="search" name="search" id="search">
                 <select name="zone" id="zone">
@@ -26,10 +35,11 @@
                 </select>
             </form>
         </section>
-        <section id="info-section">
+        <section id="info-section"> <!-- Отображается найденный домен с информацией об аукционе и о владельце, если есть. Если владельца нет, то MainButton отобразит создания ставки, чтобы забрать домен, если аукцион идет, то отобразится предложение ставки для перебивки, если владелец == пользователю, то будет доступна кнопка редактирования домена, если =!, то кнопка будет неактивна -->
             <h1>DNS info here</h1>
+            <p>kahwlyG OIHVEFLJHVAIERYVGihb ervihbkaehfjvkhaefb ihbvfkahfsdki</p>
         </section>
-        <section id="edit-section">
+        <section id="edit-section"> <!-- Изменение полей доменов, каждая строка будет проверятся на изменение, если чтото произошло, то добавляем транзу на изменение этого поля в сообщение, которое будем отправлять массивом до 4 шт, отправка будет через MainButton -->
             <h1>Edit</h1>
             <p>Kkjhdflvhbfkdfaljb akhsjfrvkah vhgsjafdvkcsahdvbk jhadvbcklsahbkvdga dksajvladskfhgika</p>
             <form action="#" name="wallet">
@@ -51,7 +61,7 @@
                 <input type="text" name="dns-next-resolver" id="dns-next-resolver">
             </form>
         </section>
-        <section id="settings-section">
+        <section id="settings-section"> <!-- Отображается при нажатии на кнопку настроек из бота -->
             <h1>Settings</h1>
             <p>Wallet</p>
         </section>
