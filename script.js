@@ -1,18 +1,15 @@
 const WebApp = window.Telegram.WebApp;
 
-async function begin() {
-    WebApp.MainButton.setParams({"text": "Connect"});
-    WebApp.MainButton.show();
-    WebApp.MainButton.enable();
+function begin() {
+    WebApp.MainButton.setParams({"text": "Connect", "is_visible": true, "is_active": true});
 }
 
 WebApp.MainButton.onClick(() => {
-    WebApp.MainButton.showProgress(true);
+    WebApp.MainButton.showProgress();
     setTimeout(() => {
         WebApp.showAlert("Connected!", () => {
             WebApp.MainButton.hideProgress();
-            WebApp.MainButton.disable();
-            WebApp.MainButton.setParams({"text": "Connect"});
+            WebApp.MainButton.setParams({"text": "Find", "is_active": false});
 
             document.getElementById("connect-section").style.display = "none";
             document.getElementById("search-section").style.display = "block";
