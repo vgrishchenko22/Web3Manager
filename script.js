@@ -9,7 +9,6 @@ async function a2() {
     WebApp.MainButton.show();
     WebApp.MainButton.enable();
 };
-WebApp.enableClosingConfirmation();
 WebApp.MainButton.onClick(() => {
     WebApp.MainButton.showProgress(true);
     setTimeout(() => {
