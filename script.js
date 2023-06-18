@@ -4,12 +4,12 @@ async function a1(params) {
     WebApp.showPopup(params);
 };
 async function a2() {
+    enableClosingConfirmation();
     WebApp.MainButton.setParams({"text": "Ыыыыыыы"})
     WebApp.MainButton.show();
     WebApp.MainButton.enable();
 };
-enableClosingConfirmation();
-WebApp.MainButton.onClick(() => {
+WebApp.onEvent('mainButtonClicked', () => {
     WebApp.MainButton.showProgress(true)
     setTimeout(() => {
         WebApp.showAlert("Qwerty");
