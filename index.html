@@ -8,14 +8,45 @@
         <title>Web3 Manager</title>
     </head>
     <body>
-        <button onclick='a1({title: "Hello", message: "kehrvsg ekgrjvbewgjbo lerwtjgnor4", buttons: [{"id": "default", "type": "default", "text": "Text on button WOOOOOW!"}, {"id": "ok", "type": "ok", "text": "Type is OOOKK!"}, {"id": "close", "type": "close", "text": "Close this SAAAAD"}]})'>Alert 1.1</button>
-        <button onclick='a1({title: "Hello", message: "kehrvsg ekgrjvbewgjbo lerwtjgnor4", buttons: [{"id": "cancel", "type": "cancel", "text": "CAAAANCEEELIIN"}, {"id": "destructive", "type": "destructive", "text": "Destructive"}]})'>Alert 1.2</button>
-        <button onclick='a1({"title": "Hello", "message": "kehrvsg ekgrjvbewgjbo lerwtjgnor4", "buttons": [{"id": "default", "type": "default", "text": "Text on button WOOOOOW!"}, {"id": "ok", "type": "ok", "text": "Type is OOOKK!"}, {"id": "close", "type": "close", "text": "Close this SAAAAD"}]})'>Alert 1.3</button>
-        <button onclick='a1({"title": "Hello", "message": "kehrvsg ekgrjvbewgjbo lerwtjgnor4", "buttons": [{"id": "cancel", "type": "cancel", "text": "CAAAANCEEELIIN"}, {"id": "destructive", "type": "destructive", "text": "Destructive"}]})'>Alert 1.4</button>
-        <button onclick="a2()">Alert 2</button>
-        <button onclick="a3()">Alert 3</button>
-        <button onclick='qr({"text": "Any Text"})'>QR</button>
-
+        <header>
+            <form action="#">
+                <input type="search" name="search" id="search">
+                <select name="zone" id="zone">
+                    <option value=".ton">.ton</option>
+                    <option value=".t.me">.t.me</option>
+                </select>
+            </form>
+        </header>
+        <main>
+            <section id="edit">
+                <form action="#" name="wallet">
+                    <label for="wallet">Wallet address</label>
+                    <input type="text" name="wallet" id="wallet">
+                    <button type="submit">Save</button>
+                </form>
+                <form action="#" name="site">
+                    <label for="site">ADNL or Bad ID</label>
+                    <input type="text" name="site" id="site">
+                    <button type="submit">Save</button><br/>
+                    <label for="site-in-storage">In TON Storage?</label>
+                    <input type="checkbox" name="site-in-storage" id="site-in-storage">
+                </form>
+                <form action="#" name="storage">
+                    <label for="storage">TON Storage</label>
+                    <input type="text" name="storage" id="storage">
+                    <button type="submit">Save</button>
+                </form>
+                <form action="#" name="dns-next-resolver">
+                    <label for="dns-next-resolver">Resolver</label>
+                    <input type="text" name="dns-next-resolver" id="dns-next-resolver">
+                    <button type="submit">Save</button>
+                </form>
+            </section>
+        </main>
+        <section id="settings">
+            <h1>Settings</h1>
+        </section>
+        
         <script src="script.js"></script>
     </body>
 </html>
