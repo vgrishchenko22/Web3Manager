@@ -9,7 +9,7 @@ WebApp.MainButton.onClick(() => {
     setTimeout(() => {
         WebApp.showAlert("Connected!", () => {
             WebApp.MainButton.hideProgress();
-            WebApp.MainButton.setParams({"text": "Find", "is_active": false});
+            WebApp.MainButton.setParams({"text": "Find"});
 
             document.getElementById("connect-section").style.display = "none";
             document.getElementById("search-section").style.display = "block";
