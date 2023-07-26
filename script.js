@@ -6,13 +6,11 @@ function begin() {
 
 WebApp.MainButton.onClick(() => {
     WebApp.MainButton.showProgress();
-    setTimeout(() => {
-        WebApp.showAlert("Connected!", () => {
-            WebApp.MainButton.hideProgress();
-            WebApp.MainButton.setParams({"text": "Find"});
+    WebApp.showAlert("Connected!", () => {
+        WebApp.MainButton.hideProgress();
+        WebApp.MainButton.setParams({"text": "Find"});
 
-            document.getElementById("connect-section").style.display = "none";
-            document.getElementById("search-section").style.display = "block";
-        });
-    }, 5000);
+        document.getElementById("connect-section").style.display = "none";
+        document.getElementById("search-section").style.display = "block";
+    });
 });
