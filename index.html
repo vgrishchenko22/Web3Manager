@@ -4,16 +4,15 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
-        <script src="libs/ton-access.min.js"></script>
-        <script src="libs/tonweb.min.js"></script>
-        <script src="libs/tgs-player.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/orbs-network/ton-access/dist/index.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/toncenter/tonweb/dist/tonweb.js"></script>
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@0.4.0/dist/tgs-player.js"></script>
         <link rel="stylesheet" href="style.css">
         <title>Web3 Manager</title>
     </head>
     <body>
-        <button onclick="begin()">Begin</button>
-
         <section id="connect-section"> <!-- Показ всех кошельков для подключения, нужно выбрать один из представленных кошельков и нажать на MainButton -->
+            <button onclick="begin()">Begin</button>
             <h1>Wallets</h1>
             <p>Select a wallet for connect</p>
             <form action="#">
@@ -37,11 +36,8 @@
             </form>
         </section>
         <section id="info-section"> <!-- Отображается найденный домен с информацией об аукционе и о владельце, если есть. Если владельца нет, то MainButton отобразит создания ставки, чтобы забрать домен, если аукцион идет, то отобразится предложение ставки для перебивки, если владелец == пользователю, то будет доступна кнопка редактирования домена, если =!, то кнопка будет неактивна -->
-            <h1 id="info-section-domain"></h1>
-            <div id="info-section-status"></div>
-            <div id="info-section-news"></div>
-            <!-- <div id="info-section-bid">Bid:</div>
-            <div id="info-section-time">Duration:</div> -->
+            <h1>DNS info here</h1>
+            <p>kahwlyG OIHVEFLJHVAIERYVGihb ervihbkaehfjvkhaefb ihbvfkahfsdki</p>
         </section>
         <section id="edit-section"> <!-- Изменение полей доменов, каждая строка будет проверятся на изменение, если чтото произошло, то добавляем транзу на изменение этого поля в сообщение, которое будем отправлять массивом до 4 шт, отправка будет через MainButton -->
             <h1>Edit</h1>
