@@ -19,9 +19,9 @@ const tmeDnsCollection = new TonWeb.dns.DnsCollection(tonweb.provider, {
     address: "EQCA14o1-VWhS2efqoh_9M1b_A9DtKTuoqfmkn83AbJzwnPi",
 });
 
-// function begin() {
-//     WebApp.MainButton.setParams({"text": "Connect", "is_visible": true, "is_active": true});
-// }
+function begin() {
+    WebApp.MainButton.setParams({"text": "Connect", "is_visible": true, "is_active": true});
+}
 
 WebApp.MainButton.onClick(async () => {
     switch ("block") {
