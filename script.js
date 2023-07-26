@@ -1,5 +1,5 @@
 function begin() {
-    WebApp.MainButton.setParams({"text": "Connect", "is_visible": true, "is_active": true});
+    WebApp.MainButton.setParams({text: "Connect", is_visible: true, is_active: true});
 }
 
 window.Telegram.WebApp.MainButton.onClick(() => {
