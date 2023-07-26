@@ -1,5 +1,5 @@
 const WebApp = window.Telegram.WebApp;
-// const TonAccess = window.TonAccess;
+const TonAccess = window.TonAccess;
 // const TonWeb = window.TonWeb;
 let tonweb;
 const admin = "EQBeknN9S797M9Bi6Kktf8wREsaIbpMpVDG-EFM5OJ6UkJhp";
