@@ -12,11 +12,9 @@ a {
 }
 #connect-section {
     display: block;
-    transition: all 4s ease-in-out;
 }
 #search-section {
     display: none;
-    transition: all 4s ease-in-out;
 }
 #info-section {
     display: none;
