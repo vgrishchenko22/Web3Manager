@@ -4,13 +4,13 @@ const TonWeb = window.TonWeb;
 let tonweb;
 const admin = "EQBeknN9S797M9Bi6Kktf8wREsaIbpMpVDG-EFM5OJ6UkJhp";
 
-// document.addEventListener("DOMContentLoaded", function () {
-//     TonAccess.getHttpEndpoint()
-//     .then((endpoint) => {
-//         tonweb = new TonWeb(new TonWeb.HttpProvider(endpoint));
-//     })
-//     .catch((error) => console.error(error));
-// });
+document.addEventListener("DOMContentLoaded", function () {
+    TonAccess.getHttpEndpoint()
+    .then((endpoint) => {
+        tonweb = new TonWeb(new TonWeb.HttpProvider(endpoint));
+    })
+    .catch((error) => console.error(error));
+});
 
 // const tonDnsCollection = new TonWeb.dns.DnsCollection(tonweb.provider, {
 //     address: "EQC3dNlesgVD8YbAazcauIrXBPfiVhMMr5YYk2in0Mtsz0Bz",
