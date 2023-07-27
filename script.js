@@ -24,112 +24,98 @@ function begin() {
 }
 
 WebApp.MainButton.onClick(async () => {
-    // if (document.getElementById("connect-section").style.display == "block") {}
-    // if (document.getElementById("search-section").style.display == "block") {}
-    // if (document.getElementById("info-section").style.display == "block") {}
-    // if (document.getElementById("edit-section").style.display == "block") {}
-    // if (document.getElementById("settings-section").style.display == "block") {}
-    switch ("block") {
-        case document.getElementById("connect-section").style.display:
-            WebApp.MainButton.setParams({"text": "Search"});
-            
-            document.getElementById("connect-section").style.display = "none";
-            document.getElementById("search-section").style.display = "block";
-            break;
-    
-        case document.getElementById("search-section").style.display:
-            WebApp.MainButton.showProgress();
+    if (document.getElementById("connect-section").style.display == "block") {
+        WebApp.MainButton.setParams({"text": "Search"});
 
-            const domain = document.getElementById('search').value.toLowerCase().trim();
-            const zone = document.getElementById('zone').value;
-
-            function validateDomain(domain) {
-                if (domain.length < 4 || domain.length > 126) {
-                    return WebApp.showAlert("Length error!")
-                }
-                
-                for (let i = 0; i < domain.length; i++) {
-                    if (domain.charAt(i) === '.') {
-                        return WebApp.showAlert("Subdomains soon...")
-                    }
-                    const char = domain.charCodeAt(i);
-                    const isHyphen = char === 45;
-                    const isValidChar = (isHyphen && i > 0 && i < domain.length - 1) || (char >= 48 && char <= 57) || (char >= 97 && char <= 122);
-                    
-                    if (!isValidChar) {
-                        return WebApp.showAlert("Invalid chars!")
-                    }
-                }
-            }
-
-            if (!validateDomain(domain)) {
-                const domainAddress = await tonDnsCollection.resolve(domain, TonWeb.dns.DNS_CATEGORY_NEXT_RESOLVER, true);
-
-                const accountInfo = await TonWeb.provider.getAddressInfo(
-                    domainAddress.toString(true, true, true)
-                );
-                const dnsItem = new TonWeb.dns.DnsItem(TonWeb.provider, {
-                    address: domainAddress
-                });
-
-                let domainExists = accountInfo.state === 'active';
-                let data = await dnsItem.methods.getData();
-                let auctionInfo = await dnsItem.methods.getAuctionInfo();
-                let lastFillUpTime = await dnsItem.methods.getLastFillUpTime();
-
-                if (accountInfo.state == "active") {
-                    if (!data.isInitialized) {
-                        domainExists = false;
-                    }
-                }
-                if (accountInfo.state == "active" && !ownerAddress) {
-                    if (auctionInfo.auctionEndTime < Date.now() / 1000) {
-                        data.ownerAddress = auctionInfo.maxBidAddress;
-                    }
-                }
-
-                if (!domainExists) {
-                    document.getElementById("info-section-domain").innerText = domain + zone;
-                    document.getElementById("info-section-status").innerText = "Status: Available";
-                    document.getElementById("info-section-news").innerText = "Soon...";
-
-                    WebApp.MainButton.hideProgress();
-                    // WebApp.MainButton.setParams({"text": "Bid to start"});
-        
-                    document.getElementById("search-section").style.display = "none";
-                    document.getElementById("info-section").style.display = "block";
-                } else if (data.ownerAddress) {
-                    document.getElementById("info-section-domain").innerText = domain + zone;
-                    document.getElementById("info-section-status").innerText = "Status: Taken";
-
-                    WebApp.MainButton.hideProgress();
-                    WebApp.MainButton.setParams({"text": "Edit"});
-        
-                    document.getElementById("search-section").style.display = "none";
-                    document.getElementById("info-section").style.display = "block";
-                } else {
-                    document.getElementById("info-section-domain").innerText = domain + zone;
-                    document.getElementById("info-section-status").innerText = "Status: On auction";
-                    document.getElementById("info-section-news").innerText = "Soon...";
-
-                    WebApp.MainButton.hideProgress();
-                    // WebApp.MainButton.setParams({"text": "Bid"});
-        
-                    document.getElementById("search-section").style.display = "none";
-                    document.getElementById("info-section").style.display = "block";
-                }
-            }
-            break;
-
-        case document.getElementById("info-section").style.display:
-            break;
-
-        case document.getElementById("edit-section").style.display:
-            break;
-
-        case document.getElementById("settings-section").style.display:
-            break;
+        document.getElementById("connect-section").style.display = "none";
+        document.getElementById("search-section").style.display = "block";
     }
+    if (document.getElementById("search-section").style.display == "block") {
+        WebApp.MainButton.showProgress();
+
+        const domain = document.getElementById('search').value.toLowerCase().trim();
+        const zone = document.getElementById('zone').value;
+
+        function validateDomain(domain) {
+            if (domain.length < 4 || domain.length > 126) {
+                return WebApp.showAlert("Length error!")
+            }
+            
+            for (let i = 0; i < domain.length; i++) {
+                if (domain.charAt(i) === '.') {
+                    return WebApp.showAlert("Subdomains soon...")
+                }
+                const char = domain.charCodeAt(i);
+                const isHyphen = char === 45;
+                const isValidChar = (isHyphen && i > 0 && i < domain.length - 1) || (char >= 48 && char <= 57) || (char >= 97 && char <= 122);
+                
+                if (!isValidChar) {
+                    return WebApp.showAlert("Invalid chars!")
+                }
+            }
+        }
+
+        if (!validateDomain(domain)) {
+            const domainAddress = await tonDnsCollection.resolve(domain, TonWeb.dns.DNS_CATEGORY_NEXT_RESOLVER, true);
+
+            const accountInfo = await TonWeb.provider.getAddressInfo(
+                domainAddress.toString(true, true, true)
+            );
+            const dnsItem = new TonWeb.dns.DnsItem(TonWeb.provider, {
+                address: domainAddress
+            });
+
+            let domainExists = accountInfo.state === 'active';
+            let data = await dnsItem.methods.getData();
+            let auctionInfo = await dnsItem.methods.getAuctionInfo();
+            let lastFillUpTime = await dnsItem.methods.getLastFillUpTime();
+
+            if (accountInfo.state == "active") {
+                if (!data.isInitialized) {
+                    domainExists = false;
+                }
+            }
+            if (accountInfo.state == "active" && !ownerAddress) {
+                if (auctionInfo.auctionEndTime < Date.now() / 1000) {
+                    data.ownerAddress = auctionInfo.maxBidAddress;
+                }
+            }
+
+            if (!domainExists) {
+                document.getElementById("info-section-domain").innerText = domain + zone;
+                document.getElementById("info-section-status").innerText = "Status: Available";
+                document.getElementById("info-section-news").innerText = "Soon...";
+
+                WebApp.MainButton.hideProgress();
+                // WebApp.MainButton.setParams({"text": "Bid to start"});
+    
+                document.getElementById("search-section").style.display = "none";
+                document.getElementById("info-section").style.display = "block";
+            } else if (data.ownerAddress) {
+                document.getElementById("info-section-domain").innerText = domain + zone;
+                document.getElementById("info-section-status").innerText = "Status: Taken";
+
+                WebApp.MainButton.hideProgress();
+                WebApp.MainButton.setParams({"text": "Edit"});
+    
+                document.getElementById("search-section").style.display = "none";
+                document.getElementById("info-section").style.display = "block";
+            } else {
+                document.getElementById("info-section-domain").innerText = domain + zone;
+                document.getElementById("info-section-status").innerText = "Status: On auction";
+                document.getElementById("info-section-news").innerText = "Soon...";
+
+                WebApp.MainButton.hideProgress();
+                // WebApp.MainButton.setParams({"text": "Bid"});
+    
+                document.getElementById("search-section").style.display = "none";
+                document.getElementById("info-section").style.display = "block";
+            }
+        }
+    }
+    if (document.getElementById("info-section").style.display == "block") {}
+    if (document.getElementById("edit-section").style.display == "block") {}
+    if (document.getElementById("settings-section").style.display == "block") {}
     // WebApp.MainButton.showProgress();
     // setTimeout(() => {
     //     WebApp.showAlert("Connected!", () => {
