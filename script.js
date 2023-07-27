@@ -22,7 +22,7 @@ const tmeDnsCollection = new TonWeb.dns.DnsCollection(TonWeb.provider, {
 function begin() {
     console.log("connect");
 
-    WebApp.MainButton.setParams({"text": "Search"});
+    WebApp.MainButton.setParams({"text": "Search", is_visible: true, is_active: true});
 
     document.getElementById("connect-section").style.display = "none";
     document.getElementById("search-section").style.display = "block";
