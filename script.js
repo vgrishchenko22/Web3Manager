@@ -25,12 +25,15 @@ function begin() {
 
 WebApp.MainButton.onClick(async () => {
     if (document.getElementById("connect-section").style.display == "block") {
+        console.log("connect");
+
         WebApp.MainButton.setParams({"text": "Search"});
 
         document.getElementById("connect-section").style.display = "none";
         document.getElementById("search-section").style.display = "block";
-    }
-    if (document.getElementById("search-section").style.display == "block") {
+    } else if (document.getElementById("search-section").style.display == "block") {
+        console.log("search");
+
         WebApp.MainButton.showProgress();
 
         const domain = document.getElementById('search').value.toLowerCase().trim();
@@ -112,10 +115,13 @@ WebApp.MainButton.onClick(async () => {
                 document.getElementById("info-section").style.display = "block";
             }
         }
+    } else if (document.getElementById("info-section").style.display == "block") {
+        console.log("info");
+    } else if (document.getElementById("edit-section").style.display == "block") {
+        console.log("edit");
+    } else if (document.getElementById("settings-section").style.display == "block") {
+        console.log("settings");
     }
-    if (document.getElementById("info-section").style.display == "block") {}
-    if (document.getElementById("edit-section").style.display == "block") {}
-    if (document.getElementById("settings-section").style.display == "block") {}
     // WebApp.MainButton.showProgress();
     // setTimeout(() => {
     //     WebApp.showAlert("Connected!", () => {
