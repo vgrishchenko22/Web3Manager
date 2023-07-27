@@ -56,9 +56,9 @@ WebApp.MainButton.onClick(async () => {
     }
 
     if (!validateDomain(domain)) {
-        const domainAddress = await tonDnsCollection.resolve(domain, TonWeb.dns.DNS_CATEGORY_NEXT_RESOLVER, true);
+        const domainAddress = await tonDnsCollection.methods.resolve(domain, TonWeb.dns.DNS_CATEGORY_NEXT_RESOLVER, true);
 
-        const accountInfo = await TonWeb.provider.getAddressInfo(
+        const accountInfo = await tonweb.provider.getAddressInfo(
             domainAddress.toString(true, true, true)
         );
         const dnsItem = new TonWeb.dns.DnsItem(TonWeb.provider, {
