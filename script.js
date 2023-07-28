@@ -17,7 +17,7 @@ async function next() {
         document.getElementById("info-section-status").innerText = "";
         document.getElementById("info-section-news").innerText = "";
     
-        const domain = document.getElementById('search').value.toLowerCase().trim();
+        const domain = document.getElementById('domain').value.toLowerCase().trim();
         const zone = document.getElementById('zone').value;
     
         if (domain.length < 4 || domain.length > 126) {
