@@ -79,18 +79,21 @@ Telegram.WebApp.MainButton.onClick(async () => {
             if (!domainExists) {
                 document.getElementById("info-section-domain").innerText = domain + zone;
                 document.getElementById("info-section-status").innerText = "Status: Available";
-                document.getElementById("info-section-news").innerText = "Soon...";
+                
+                Telegram.WebApp.MainButton.setText("Place a bid to start the auction");
             } else if (ownerAddress) {
                 document.getElementById("info-section-domain").innerText = domain + zone;
                 document.getElementById("info-section-status").innerText = "Status: Taken";
 
-                Telegram.WebApp.MainButton.hideProgress().setText("Edit");
+                Telegram.WebApp.MainButton.setText("Edit");
             } else {
                 document.getElementById("info-section-domain").innerText = domain + zone;
                 document.getElementById("info-section-status").innerText = "Status: On auction";
-                document.getElementById("info-section-news").innerText = "Soon...";
+                
+                Telegram.WebApp.MainButton.setText("Place a bid");
             }
 
+            Telegram.WebApp.MainButton.hideProgress();
             Telegram.WebApp.BackButton.show();
 
             document.getElementById("search-section").style.display = "none";
@@ -117,7 +120,7 @@ Telegram.WebApp.MainButton.onClick(async () => {
         case "?section=edit":
             Telegram.WebApp.MainButton.showProgress();
             
-            Telegram.WebApp.MainButton.hideProgress().setText("Edit");
+            Telegram.WebApp.MainButton.hideProgress().setText("Save");
             Telegram.WebApp.BackButton.show();
 
             break;
