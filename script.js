@@ -7,13 +7,17 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .catch((error) => console.error(error));
 
+    Telegram.WebApp.MainButton.setParams({text: "Search", is_visible: true, is_active: true});
+    Telegram.WebApp.BackButton.hide();
+    Telegram.WebApp.disableClosingConfirmation();
+
     window.history.replaceState("search-section", "Search", "/Web3Manager?section=search");
 });
 
-async function next() {
+Telegram.WebApp.MainButton.onClick(async () => {
     switch (window.location.search) {
         case "?section=search":
-            console.log("search");
+            Telegram.WebApp.MainButton.showProgress();
 
             document.getElementById("info-section-domain").innerText = "";
             document.getElementById("info-section-status").innerText = "";
@@ -23,21 +27,21 @@ async function next() {
             const zone = document.getElementById('zone').value;
         
             if (domain.length < 4 || domain.length > 126) {
-                return console.log("Length error!");
+                return Telegram.WebApp.showAlert("Length error!", () => Telegram.WebApp.MainButton.hideProgress());
             }
         
             const charArray = domain.split("");
             let i = 0;
             for await (const oneChar of charArray) {
                 if (oneChar === ".") {
-                    return console.log("Subdomains soon...");
+                    return Telegram.WebApp.showAlert("Subdomains soon...", () => Telegram.WebApp.MainButton.hideProgress());
                 }
         
                 const char = domain.charCodeAt(i);
                 const isHyphen = char === 45;
                 const isValidChar = (isHyphen && i > 0 && i < domain.length - 1) || (char >= 48 && char <= 57) || (char >= 97 && char <= 122);
                 if (!isValidChar) {
-                    return console.log("Invalid chars!");
+                    return Telegram.WebApp.showAlert("Invalid chars!", () => Telegram.WebApp.MainButton.hideProgress());
                 }
         
                 i++
@@ -73,24 +77,22 @@ async function next() {
             }
             
             if (!domainExists) {
-                console.log("free");
-    
                 document.getElementById("info-section-domain").innerText = domain + zone;
                 document.getElementById("info-section-status").innerText = "Status: Available";
                 document.getElementById("info-section-news").innerText = "Soon...";
             } else if (ownerAddress) {
-                console.log("busy");
-    
                 document.getElementById("info-section-domain").innerText = domain + zone;
                 document.getElementById("info-section-status").innerText = "Status: Taken";
+
+                Telegram.WebApp.MainButton.hideProgress().setText("Edit");
             } else {
-                console.log("auction");
-    
                 document.getElementById("info-section-domain").innerText = domain + zone;
                 document.getElementById("info-section-status").innerText = "Status: On auction";
                 document.getElementById("info-section-news").innerText = "Soon...";
             }
-    
+
+            Telegram.WebApp.BackButton.show();
+
             document.getElementById("search-section").style.display = "none";
             document.getElementById("info-section").style.display = "block";
     
@@ -99,7 +101,11 @@ async function next() {
             break;
 
         case "?section=info":
-            console.log("info");
+            Telegram.WebApp.MainButton.showProgress();
+            
+            Telegram.WebApp.MainButton.hideProgress().setText("Save");
+            Telegram.WebApp.BackButton.show();
+            Telegram.WebApp.enableClosingConfirmation();
 
             document.getElementById("info-section").style.display = "none";
             document.getElementById("edit-section").style.display = "block";
@@ -109,21 +115,25 @@ async function next() {
             break;
 
         case "?section=edit":
-            console.log("edit");
+            Telegram.WebApp.MainButton.showProgress();
+            
+            Telegram.WebApp.MainButton.hideProgress().setText("Edit");
+            Telegram.WebApp.BackButton.show();
 
             break;
     }
-}
+});
 
-async function back() {
+Telegram.WebApp.BackButton.onClick(async () => {
     switch (window.location.search) {
         case "?section=search":
-            console.log("search");
+            Telegram.WebApp.BackButton.hide();
 
             break;
 
         case "?section=info":
-            console.log("info");
+            Telegram.WebApp.MainButton.setText("Search");
+            Telegram.WebApp.BackButton.hide();
 
             document.getElementById("info-section").style.display = "none";
             document.getElementById("search-section").style.display = "block";
@@ -133,7 +143,8 @@ async function back() {
             break;
 
         case "?section=edit":
-            console.log("edit");
+            Telegram.WebApp.MainButton.setText("Edit");
+            Telegram.WebApp.BackButton.show();
 
             document.getElementById("edit-section").style.display = "none";
             document.getElementById("info-section").style.display = "block";
@@ -142,4 +153,4 @@ async function back() {
 
             break;
     }
-}
+});
