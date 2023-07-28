@@ -95,6 +95,7 @@ Telegram.WebApp.MainButton.onClick(async () => {
 
             Telegram.WebApp.MainButton.hideProgress();
             Telegram.WebApp.BackButton.show();
+            Telegram.WebApp.disableClosingConfirmation();
 
             document.getElementById("search-section").style.display = "none";
             document.getElementById("info-section").style.display = "block";
@@ -148,6 +149,7 @@ Telegram.WebApp.BackButton.onClick(async () => {
         case "?section=edit":
             Telegram.WebApp.MainButton.setText("Edit");
             Telegram.WebApp.BackButton.show();
+            Telegram.WebApp.disableClosingConfirmation();
 
             document.getElementById("edit-section").style.display = "none";
             document.getElementById("info-section").style.display = "block";
