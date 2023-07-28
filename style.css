@@ -10,9 +10,6 @@ p {
 a {
     color: var(--tg-theme-link-color);
 }
-#connect-section {
-    display: none;
-}
 #search-section {
     display: block;
 }
@@ -20,6 +17,9 @@ a {
     display: none;
 }
 #edit-section {
+    display: none;
+}
+#connect-section {
     display: none;
 }
 #settings-section {
