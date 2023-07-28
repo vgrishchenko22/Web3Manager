@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
         tonweb = new TonWeb(new TonWeb.HttpProvider(endpoint));
     })
     .catch((error) => console.error(error));
-    window.history.replaceState("search-section", null, "/search");
+    window.history.replaceState("search-section", "Search", "/search");
 });
 
 async function next() {
@@ -92,7 +92,7 @@ async function next() {
         document.getElementById("search-section").style.display = "none";
         document.getElementById("info-section").style.display = "block";
 
-        window.history.pushState("info-section", null, "");
+        window.history.pushState("info-section", "Info", "/info");
     }
     if (window.location.pathname == "/info") {
         console.log("info");
@@ -100,7 +100,7 @@ async function next() {
         document.getElementById("info-section").style.display = "none";
         document.getElementById("edit-section").style.display = "block";
 
-        window.history.pushState("", null, "");
+        window.history.pushState("edit-section", "Edit", "/edit");
     }
     if (window.location.pathname == "/edit") {
         console.log("edit");
@@ -116,11 +116,15 @@ async function back() {
 
         document.getElementById("info-section").style.display = "none";
         document.getElementById("search-section").style.display = "block";
+
+        window.history.back();
     }
     if (window.location.pathname == "/edit") {
         console.log("edit");
 
         document.getElementById("edit-section").style.display = "none";
         document.getElementById("info-section").style.display = "block";
+
+        window.history.back();
     }
 }
