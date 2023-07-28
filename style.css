@@ -11,10 +11,10 @@ a {
     color: var(--tg-theme-link-color);
 }
 #connect-section {
-    display: block;
+    display: none;
 }
 #search-section {
-    display: none;
+    display: block;
 }
 #info-section {
     display: none;
