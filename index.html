@@ -6,42 +6,32 @@
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
         <script src="libs/ton-access.min.js"></script>
         <script src="libs/tonweb.min.js"></script>
+        <!-- <script src="libs/tgs-player.min.js"></script> -->
         <link rel="stylesheet" href="style.css">
-        <title>Web3 Manager</title>
+        <title>DNS Controller</title>
     </head>
     <body>
-        <!-- <section id="connect-section">
-            <h1>Wallets</h1>
-            <p>Select a wallet for connect</p>
-            <form action="#">
-                <input type="radio" name="wallet" id="TonKeeper" value="TonKeeper">
-                <label for="TonKeeper">TonKeeper</label><br>
-                <input type="radio" name="wallet" id="Tonhub" value="Tonhub">
-                <label for="Tonhub">Tonhub</label><br>
-                <input type="radio" name="wallet" id="OpenMask" value="OpenMask">
-                <label for="OpenMask">OpenMask</label>
-            </form>
-        </section> -->
         <section id="search-section">
             <h1>Search Domain</h1>
-            <p>Down find jmfd drhdklseg drh</p>
+            <p>Write and click to button</p>
             <form action="#">
-                <input type="search" name="search" id="search">
+                <input type="text" name="domain" id="domain">
                 <select name="zone" id="zone">
                     <option value=".ton">.ton</option>
                     <option value=".t.me">.t.me</option>
                 </select>
             </form>
-            <button onclick="search()">Search</button>
         </section>
         <section id="info-section">
             <h1 id="info-section-domain"></h1>
             <div id="info-section-status"></div>
             <div id="info-section-news"></div>
+            <!-- <div id="info-section-bid">Bid:</div>
+            <div id="info-section-time">Duration:</div> -->
         </section>
         <section id="edit-section">
             <h1>Edit</h1>
-            <p>Edit this</p>
+            <p>Edit any window</p>
             <form action="#" name="wallet">
                 <label for="wallet">Wallet address</label>
                 <input type="text" name="wallet" id="wallet">
@@ -61,7 +51,19 @@
                 <input type="text" name="dns-next-resolver" id="dns-next-resolver">
             </form>
         </section>
-        <!-- <section id="settings-section">
+        <!-- <section id="connect-section">
+            <h1>Wallets</h1>
+            <p>Select a wallet for connect</p>
+            <form action="#">
+                <input type="radio" name="wallet" id="TonKeeper" value="TonKeeper">
+                <label for="TonKeeper">TonKeeper</label><br>
+                <input type="radio" name="wallet" id="Tonhub" value="Tonhub">
+                <label for="Tonhub">Tonhub</label><br>
+                <input type="radio" name="wallet" id="OpenMask" value="OpenMask">
+                <label for="OpenMask">OpenMask</label>
+            </form>
+        </section>
+        <section id="settings-section">
             <h1>Settings</h1>
             <p>Wallet</p>
         </section> -->
