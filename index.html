@@ -6,14 +6,11 @@
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
         <script src="libs/ton-access.min.js"></script>
         <script src="libs/tonweb.min.js"></script>
-        <script src="libs/tgs-player.min.js"></script>
         <link rel="stylesheet" href="style.css">
         <title>Web3 Manager</title>
     </head>
     <body>
-        <button onclick="begin()">Begin</button>
-
-        <section id="connect-section"> <!-- Показ всех кошельков для подключения, нужно выбрать один из представленных кошельков и нажать на MainButton -->
+        <!-- <section id="connect-section">
             <h1>Wallets</h1>
             <p>Select a wallet for connect</p>
             <form action="#">
@@ -24,8 +21,8 @@
                 <input type="radio" name="wallet" id="OpenMask" value="OpenMask">
                 <label for="OpenMask">OpenMask</label>
             </form>
-        </section>
-        <section id="search-section"> <!-- Главная страница поиска, пользователь должен написать название домена, выбрать доменную зону и нажать на MainButton -->
+        </section> -->
+        <section id="search-section">
             <h1>Search Domain</h1>
             <p>Down find jmfd drhdklseg drh</p>
             <form action="#">
@@ -35,17 +32,16 @@
                     <option value=".t.me">.t.me</option>
                 </select>
             </form>
+            <button onclick="search()">Search</button>
         </section>
-        <section id="info-section"> <!-- Отображается найденный домен с информацией об аукционе и о владельце, если есть. Если владельца нет, то MainButton отобразит создания ставки, чтобы забрать домен, если аукцион идет, то отобразится предложение ставки для перебивки, если владелец == пользователю, то будет доступна кнопка редактирования домена, если =!, то кнопка будет неактивна -->
+        <section id="info-section">
             <h1 id="info-section-domain"></h1>
             <div id="info-section-status"></div>
             <div id="info-section-news"></div>
-            <!-- <div id="info-section-bid">Bid:</div>
-            <div id="info-section-time">Duration:</div> -->
         </section>
-        <section id="edit-section"> <!-- Изменение полей доменов, каждая строка будет проверятся на изменение, если чтото произошло, то добавляем транзу на изменение этого поля в сообщение, которое будем отправлять массивом до 4 шт, отправка будет через MainButton -->
+        <section id="edit-section">
             <h1>Edit</h1>
-            <p>Kkjhdflvhbfkdfaljb akhsjfrvkah vhgsjafdvkcsahdvbk jhadvbcklsahbkvdga dksajvladskfhgika</p>
+            <p>Edit this</p>
             <form action="#" name="wallet">
                 <label for="wallet">Wallet address</label>
                 <input type="text" name="wallet" id="wallet">
@@ -65,10 +61,10 @@
                 <input type="text" name="dns-next-resolver" id="dns-next-resolver">
             </form>
         </section>
-        <section id="settings-section"> <!-- Отображается при нажатии на кнопку настроек из бота -->
+        <!-- <section id="settings-section">
             <h1>Settings</h1>
             <p>Wallet</p>
-        </section>
+        </section> -->
 
         <script src="script.js"></script>
     </body>
