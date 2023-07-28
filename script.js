@@ -1,8 +1,8 @@
 const WebApp = window.Telegram.WebApp;
-const TonAccess = window.TonAccess;
-const TonWeb = window.TonWeb;
-let tonweb;
-const admin = "EQBeknN9S797M9Bi6Kktf8wREsaIbpMpVDG-EFM5OJ6UkJhp";
+// const TonAccess = window.TonAccess;
+// const TonWeb = window.TonWeb;
+
+let tonweb, dnsCollection, dnsItem;
 
 document.addEventListener("DOMContentLoaded", function () {
     TonAccess.getHttpEndpoint()
@@ -12,101 +12,107 @@ document.addEventListener("DOMContentLoaded", function () {
     .catch((error) => console.error(error));
 });
 
-const tonDnsCollection = new TonWeb.dns.DnsCollection(TonWeb.provider, {
-    address: "EQC3dNlesgVD8YbAazcauIrXBPfiVhMMr5YYk2in0Mtsz0Bz",
-});
-const tmeDnsCollection = new TonWeb.dns.DnsCollection(TonWeb.provider, {
-    address: "EQCA14o1-VWhS2efqoh_9M1b_A9DtKTuoqfmkn83AbJzwnPi",
-});
+// function begin() {
+//     WebApp.MainButton.setParams({text: "Search", is_visible: true, is_active: true});
+//     // console.log(document.getElementById("connect-section").style.display, document.getElementById("search-section").style.display, document.getElementById("info-section").style.display, document.getElementById("edit-section").style.display, document.getElementById("settings-section").style.display);
+// }
 
-function begin() {
-    console.log("connect");
+WebApp.MainButton.setParams({text: "Search", is_visible: true, is_active: true});
 
-    WebApp.MainButton.setParams({"text": "Search", is_visible: true, is_active: true});
+async function validateDomain(domain) {
+    if (domain.length < 4 || domain.length > 126) {
+        WebApp.showAlert("Length error!", () => WebApp.MainButton.hideProgress());
+        return "Length error!"
+    }
+    const charArray = domain.split();
+    let i = 0;
+    for await (const oneChar of charArray) {
+        if (oneChar === ".") {
+            WebApp.showAlert("Subdomains soon...", () => WebApp.MainButton.hideProgress());
+            return "Subdomains soon..."
+        }
+        const char = domain.charCodeAt(i);
+        const isHyphen = char === 45;
+        const isValidChar = (isHyphen && i > 0 && i < domain.length - 1) || (char >= 48 && char <= 57) || (char >= 97 && char <= 122);
+        
+        if (!isValidChar) {
+            WebApp.showAlert("Invalid chars!", () => WebApp.MainButton.hideProgress());
+            return "Invalid chars!"
+        }
 
-    document.getElementById("connect-section").style.display = "none";
-    document.getElementById("search-section").style.display = "block";
+        i++
+    }
 }
 
 WebApp.MainButton.onClick(async () => {
+    WebApp.MainButton.showProgress();
+
     console.log("search");
 
-    WebApp.MainButton.showProgress();
+    document.getElementById("info-section-domain").innerText = "";
+    document.getElementById("info-section-status").innerText = "";
+    document.getElementById("info-section-news").innerText = "";
 
     const domain = document.getElementById('search').value.toLowerCase().trim();
     const zone = document.getElementById('zone').value;
 
-    function validateDomain(domain) {
-        if (domain.length < 4 || domain.length > 126) {
-            return WebApp.showAlert("Length error!")
-        }
-        
-        for (let i = 0; i < domain.length; i++) {
-            if (domain.charAt(i) === '.') {
-                return WebApp.showAlert("Subdomains soon...")
-            }
-            const char = domain.charCodeAt(i);
-            const isHyphen = char === 45;
-            const isValidChar = (isHyphen && i > 0 && i < domain.length - 1) || (char >= 48 && char <= 57) || (char >= 97 && char <= 122);
-            
-            if (!isValidChar) {
-                return WebApp.showAlert("Invalid chars!")
-            }
-        }
-    }
+    dnsCollection = new TonWeb.dns.DnsCollection(tonweb.provider, {
+        address: (await tonweb.dns.resolve(domain + zone, TonWeb.dns.DNS_CATEGORY_NEXT_RESOLVER, true)).toString(true, true, true)
+    });
 
-    if (!validateDomain(domain)) {
-        const domainAddress = await tonDnsCollection.methods.resolve(domain, TonWeb.dns.DNS_CATEGORY_NEXT_RESOLVER, true);
+    if (!(await validateDomain(domain))) {
+        const domainAddress = await dnsCollection.resolve(domain, TonWeb.dns.DNS_CATEGORY_NEXT_RESOLVER, true);
+        const accountInfo = await tonweb.provider.getAddressInfo(domainAddress.toString(true, true, true));
 
-        const accountInfo = await tonweb.provider.getAddressInfo(
-            domainAddress.toString(true, true, true)
-        );
-        const dnsItem = new TonWeb.dns.DnsItem(TonWeb.provider, {
-            address: domainAddress
-        });
-
-        let domainExists = accountInfo.state === 'active';
-        let data = await dnsItem.methods.getData();
-        let auctionInfo = await dnsItem.methods.getAuctionInfo();
-        let lastFillUpTime = await dnsItem.methods.getLastFillUpTime();
-
-        if (accountInfo.state == "active") {
+        let domainExists = accountInfo.state === 'active'
+        let ownerAddress = null
+    
+        if (domainExists) {
+            dnsItem = new TonWeb.dns.DnsItem(tonweb.provider, {
+                address: domainAddress,
+            })
+            const data = await dnsItem.methods.getData()
             if (!data.isInitialized) {
-                domainExists = false;
+                domainExists = false
+            } else {
+                ownerAddress = data.ownerAddress
             }
         }
-        if (accountInfo.state == "active" && !ownerAddress) {
+        let auctionInfo = null
+        if (domainExists && !ownerAddress) {
+            auctionInfo = await dnsItem.methods.getAuctionInfo()
             if (auctionInfo.auctionEndTime < Date.now() / 1000) {
-                data.ownerAddress = auctionInfo.maxBidAddress;
+                ownerAddress = auctionInfo.maxBidAddress
             }
         }
-
+        // let lastFillUpTime = 0
+        // if (domainExists && ownerAddress) {
+        //     lastFillUpTime = await dnsItem.methods.getLastFillUpTime()
+        // }
+        
         if (!domainExists) {
+            console.log("free");
             document.getElementById("info-section-domain").innerText = domain + zone;
             document.getElementById("info-section-status").innerText = "Status: Available";
             document.getElementById("info-section-news").innerText = "Soon...";
 
-            WebApp.MainButton.hideProgress();
-            // WebApp.MainButton.setParams({"text": "Bid to start"});
-
             document.getElementById("search-section").style.display = "none";
             document.getElementById("info-section").style.display = "block";
-        } else if (data.ownerAddress) {
+        } else if (ownerAddress) {
+            console.log("busy");
             document.getElementById("info-section-domain").innerText = domain + zone;
             document.getElementById("info-section-status").innerText = "Status: Taken";
 
-            WebApp.MainButton.hideProgress();
-            WebApp.MainButton.setParams({"text": "Edit"});
+            WebApp.MainButton.hideProgress().setText("Edit");
+            WebApp.BackButton.show();
 
             document.getElementById("search-section").style.display = "none";
             document.getElementById("info-section").style.display = "block";
         } else {
+            console.log("auction");
             document.getElementById("info-section-domain").innerText = domain + zone;
             document.getElementById("info-section-status").innerText = "Status: On auction";
             document.getElementById("info-section-news").innerText = "Soon...";
-
-            WebApp.MainButton.hideProgress();
-            // WebApp.MainButton.setParams({"text": "Bid"});
 
             document.getElementById("search-section").style.display = "none";
             document.getElementById("info-section").style.display = "block";
@@ -114,16 +120,12 @@ WebApp.MainButton.onClick(async () => {
     }
 });
 
+WebApp.BackButton.onClick(async () => {
+    WebApp.BackButton.hide();
+    WebApp.MainButton.setText("Search");
+    
+    document.getElementById("info-section").style.display = "none";
+    document.getElementById("search-section").style.display = "block";
+});
+
 WebApp.enableClosingConfirmation();
-// async function a2() {
-//     WebApp.MainButton.setParams({"text": "ДА!!!"});
-//     WebApp.MainButton.show();
-//     WebApp.MainButton.enable();
-// };
-// WebApp.MainButton.onClick(() => {
-//     WebApp.MainButton.showProgress(true);
-//     setTimeout(() => {
-//         WebApp.showAlert("Qwerty");
-//         WebApp.MainButton.hideProgress();
-//     }, 5000);
-// });
