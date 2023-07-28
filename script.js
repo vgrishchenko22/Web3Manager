@@ -6,12 +6,12 @@ document.addEventListener("DOMContentLoaded", function () {
         tonweb = new TonWeb(new TonWeb.HttpProvider(endpoint));
     })
     .catch((error) => console.error(error));
-    window.history.replaceState("search-section", "Search", "/search");
+    // window.history.replaceState("search-section", "Search", "/search");
 });
 
 async function next() {
     switch (window.location.pathname) {
-        case "/search":
+        default:
             console.log("search");
 
             document.getElementById("info-section-domain").innerText = "";
