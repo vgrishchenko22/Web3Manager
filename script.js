@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .catch((error) => console.error(error));
 
-    window.Telegram.WebApp.MainButton.setParams({text: "Search", is_visible: true, is_active: true});
+    Telegram.WebApp.MainButton.setParams({text: "Search", is_visible: true, is_active: true});
     Telegram.WebApp.BackButton.hide();
     Telegram.WebApp.disableClosingConfirmation();
 
@@ -96,8 +96,43 @@ Telegram.WebApp.MainButton.onClick(async () => {
             document.getElementById("info-section-domain").innerText = domain + zone;
             if (!domainExists) {
                 document.getElementById("info-section-status").innerText = "Status: Available";
-                document.getElementById("info-section-bid").innerText = "";
-                document.getElementById("info-section-duration").innerText = "";
+
+                const getMinPriceConfig = (domainCharCount) => {
+                    switch (domainCharCount) {
+                        case 4: return ['1000', '100'];
+                        case 5: return ['500', '50'];
+                        case 6: return ['400', '40'];
+                        case 7: return ['300', '30'];
+                        case 8: return ['200', '20'];
+                        case 9: return ['100', '10'];
+                        case 10: return ['50', '5'];
+                        default:
+                            return ['10', '1'];
+                    }
+                }
+                
+                const getMinPrice = (domain) => {
+                    const arr = getMinPriceConfig(domain.length);
+                    let startMinPrice = TonWeb.utils.toNano(arr[0]);
+                    const endMinPrice = TonWeb.utils.toNano(arr[1]);
+                    const months = Math.floor((Math.floor(Date.now() / 1000) - 1659171600) / 2592000);
+                    if (months > 21) {
+                        return endMinPrice;
+                    }
+                    for (let index = 0; index < months; index++) {
+                        startMinPrice = startMinPrice.mul(new TonWeb.utils.BN(90)).div(new TonWeb.utils.BN(100));
+                    }
+                    return startMinPrice;
+                }
+
+                document.getElementById("info-section-bid").innerText = "Bid: " + getMinPrice(domain);
+                
+                let months = Math.floor((Math.floor(Date.now() / 1000) - 1659171600) / 2592000);
+                if (months > 12) {
+                    months = 12;
+                }
+
+                document.getElementById("info-section-duration").innerText = "Duration: " + 60 * 60 * 24 * 7 - (60 * 60 * 24 * 7 - 60 * 60) * months / 12;
                 
                 Telegram.WebApp.MainButton.setText("Place a bid to start the auction");
             } else if (ownerAddress) {
