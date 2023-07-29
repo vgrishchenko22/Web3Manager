@@ -125,14 +125,14 @@ Telegram.WebApp.MainButton.onClick(async () => {
                     return startMinPrice;
                 }
 
-                document.getElementById("info-section-bid").innerText = "Bid: " + getMinPrice(domain);
+                document.getElementById("info-section-bid").innerText = "Bid: " + TonWeb.utils.fromNano(getMinPrice(domain));
                 
                 let months = Math.floor((Math.floor(Date.now() / 1000) - 1659171600) / 2592000);
                 if (months > 12) {
                     months = 12;
                 }
 
-                document.getElementById("info-section-duration").innerText = "Duration: " + 60 * 60 * 24 * 7 - (60 * 60 * 24 * 7 - 60 * 60) * months / 12;
+                document.getElementById("info-section-duration").innerText = "Duration: " + (60 * 60 * 24 * 7 - (60 * 60 * 24 * 7 - 60 * 60) * months / 12);
                 
                 Telegram.WebApp.MainButton.setText("Place a bid to start the auction");
             } else if (ownerAddress) {
