@@ -132,7 +132,7 @@ Telegram.WebApp.MainButton.onClick(async () => {
                     months = 12;
                 }
 
-                document.getElementById("info-section-duration").innerText = "Duration: " + (60 * 60 * 24 * 7 - (60 * 60 * 24 * 7 - 60 * 60) * months / 12);
+                document.getElementById("info-section-duration").innerText = "Duration: " + new Date(Date.now() + (60 * 60 * 24 * 7 - (60 * 60 * 24 * 7 - 60 * 60) * months / 12) * 1000).toISOString();
                 
                 Telegram.WebApp.MainButton.setText("Place a bid to start the auction");
             } else if (ownerAddress) {
