@@ -6,7 +6,6 @@
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
         <script src="libs/ton-access.min.js"></script>
         <script src="libs/tonweb.min.js"></script>
-        <!-- <script src="libs/tgs-player.min.js"></script> -->
         <link rel="stylesheet" href="style.css">
         <title>DNS Controller</title>
     </head>
@@ -14,16 +13,15 @@
         <section id="search-section">
             <h1>Search Domain</h1>
             <p>Write and click to button</p>
-            <form action="#">
+            <div action="#">
                 <input type="text" name="domain" id="domain">
                 <select name="zone" id="zone">
                     <option value=".ton">.ton</option>
                     <option value=".t.me">.t.me</option>
                 </select>
-            </form>
+            </div>
         </section>
         <section id="info-section">
-            <div id="info-section-news"></div>
             <h1 id="info-section-domain"></h1>
             <div id="info-section-status"></div>
 
@@ -43,42 +41,26 @@
         <section id="edit-section">
             <h1>Edit</h1>
             <p>Edit any window</p>
-            <form action="#" name="wallet">
+            <div action="#" name="wallet">
                 <label for="wallet">Wallet address</label>
                 <input type="text" name="wallet" id="wallet">
-            </form>
-            <form action="#" name="site">
+            </div>
+            <div action="#" name="site">
                 <label for="site">ADNL or Bad ID</label>
                 <input type="text" name="site" id="site">
                 <label for="site-in-storage">In TON Storage?</label>
                 <input type="checkbox" name="site-in-storage" id="site-in-storage">
-            </form>
-            <form action="#" name="storage">
+            </div>
+            <div action="#" name="storage">
                 <label for="storage">TON Storage</label>
                 <input type="text" name="storage" id="storage">
-            </form>
-            <form action="#" name="dns-next-resolver">
+            </div>
+            <div action="#" name="dns-next-resolver">
                 <label for="dns-next-resolver">Resolver address</label>
                 <input type="text" name="dns-next-resolver" id="dns-next-resolver">
-            </form>
+            </div>
         </section>
-        <!-- <section id="connect-section">
-            <h1>Wallets</h1>
-            <p>Select a wallet for connect</p>
-            <form action="#">
-                <input type="radio" name="wallet" id="TonKeeper" value="TonKeeper">
-                <label for="TonKeeper">TonKeeper</label><br>
-                <input type="radio" name="wallet" id="Tonhub" value="Tonhub">
-                <label for="Tonhub">Tonhub</label><br>
-                <input type="radio" name="wallet" id="OpenMask" value="OpenMask">
-                <label for="OpenMask">OpenMask</label>
-            </form>
-        </section>
-        <section id="settings-section">
-            <h1>Settings</h1>
-            <p>Wallet</p>
-        </section> -->
 
-        <script src="script.js"></script>
+        <script src="script2.js"></script>
     </body>
 </html>
