@@ -1,4 +1,5 @@
 let tonweb, dnsCollection, dnsItem;
+const a = "EQBeknN9S797M9Bi6Kktf8wREsaIbpMpVDG-EFM5OJ6UkJhp";
 
 document.addEventListener("DOMContentLoaded", function () {
     TonAccess.getHttpEndpoint()
@@ -21,8 +22,20 @@ Telegram.WebApp.MainButton.onClick(async () => {
 
             document.getElementById("info-section-domain").innerText = "";
             document.getElementById("info-section-status").innerText = "";
-            document.getElementById("info-section-news").innerText = "";
-        
+
+            document.getElementById("info-section-bid").innerText = "";
+            document.getElementById("info-section-duration").innerText = "";
+
+            document.getElementById("info-section-owner").innerText = "";
+            document.getElementById("info-section-expire").innerText = "";
+
+            document.getElementById("info-section-max-bid").innerText = "";
+            document.getElementById("info-section-max-bid-address").innerText = "";
+            document.getElementById("info-section-bid-step").innerText = "";
+            document.getElementById("info-section-min-bid").innerText = "";
+
+            document.getElementById("info-section-timer").innerText = "";
+
             const domain = document.getElementById('domain').value.toLowerCase().trim();
             const zone = document.getElementById('zone').value;
         
@@ -68,27 +81,44 @@ Telegram.WebApp.MainButton.onClick(async () => {
                     ownerAddress = data.ownerAddress
                 }
             }
-            let auctionInfo = null
+            let auctionInfo = null;
             if (domainExists && !ownerAddress) {
                 auctionInfo = await dnsItem.methods.getAuctionInfo()
                 if (auctionInfo.auctionEndTime < Date.now() / 1000) {
                     ownerAddress = auctionInfo.maxBidAddress
                 }
             }
-            
+            let lastFillUpTime = 0;
+            if (domainExists && ownerAddress) {
+                lastFillUpTime = await dnsItem.methods.getLastFillUpTime();
+            }
+
+            document.getElementById("info-section-domain").innerText = domain + zone;
             if (!domainExists) {
-                document.getElementById("info-section-domain").innerText = domain + zone;
                 document.getElementById("info-section-status").innerText = "Status: Available";
+                document.getElementById("info-section-bid").innerText = "";
+                document.getElementById("info-section-duration").innerText = "";
                 
                 Telegram.WebApp.MainButton.setText("Place a bid to start the auction");
             } else if (ownerAddress) {
-                document.getElementById("info-section-domain").innerText = domain + zone;
                 document.getElementById("info-section-status").innerText = "Status: Taken";
 
+                document.getElementById("info-section-owner").innerText = "Owner: " + ownerAddress.toString(true, true, true);
+
+                const expireDate = new Date(lastFillUpTime * 1000 + 31622400000);
+                document.getElementById("info-section-expire").innerText = "Expire: " + expireDate.toISOString().replace("T", "-").slice(0,19).split('-').reverse().join(".").replace(".", " ").split(" ").reverse().join(" ");
+                
+                if (a == ownerAddress.toString(true, true, true)) {
+                    console.log("You Owner");
+                }
+                
                 Telegram.WebApp.MainButton.setText("Edit");
             } else {
-                document.getElementById("info-section-domain").innerText = domain + zone;
                 document.getElementById("info-section-status").innerText = "Status: On auction";
+                document.getElementById("info-section-max-bid").innerText = "";
+                document.getElementById("info-section-max-bid-address").innerText = "";
+                document.getElementById("info-section-bid-step").innerText = "";
+                document.getElementById("info-section-min-bid").innerText = "";
                 
                 Telegram.WebApp.MainButton.setText("Place a bid");
             }
