@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .catch((error) => console.error(error));
 
-    Telegram.WebApp.MainButton.setParams({text: "Search", is_visible: true, is_active: true});
+    window.Telegram.WebApp.MainButton.setParams({text: "Search", is_visible: true, is_active: true});
     Telegram.WebApp.BackButton.hide();
     Telegram.WebApp.disableClosingConfirmation();
 
